@@ -1,0 +1,16 @@
+image: openscad/mxe-i686-deps
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+win32:
+  stage: build
+  before_script:
+    - export PATH="/mxe/usr/bin/:${PATH}"
+  script:
+    - /mxe/usr/i686-w64-mingw32.static.posix/qt5/bin/qmake CONFIG+=release translator.pro && make -j`nproc --all`
+  artifacts:
+    paths:
+      - translator.asi
+  cache:
+    paths:
+      - "release/*.o"
